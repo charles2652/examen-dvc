@@ -3,49 +3,18 @@
 # -----------------------------
 env_examen/
 venv/
-__pycache__/
-*.pyc
-
-# -----------------------------
-# Données volumineuses ou générées par DVC
-# -----------------------------
-data/raw_data/*
-data/processed_data/*
-models/*
-
-# -----------------------------
-# Fichiers temporaires / logs
-# -----------------------------
-*.log
-*.tmp
-
-# -----------------------------
-# Fichiers IDE / OS
-# -----------------------------
-.vscode/
-.idea/
-.DS_Store
-
-=======
-# Environnements virtuels
-env_examen/
 .venv/
-venv/
-
-# Données brutes
-data/raw_data/*.csv
-
-# DVC cache
-#.dvc/cache/
-=======
-=======
-# -----------------------------
-# Environnements Python
-# -----------------------------
-env_examen/
-venv/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# -----------------------------
+# Fichiers temporaires Python
+# -----------------------------
+*.log
+*.tmp
+*.swp
 
 # -----------------------------
 # Données volumineuses ou générées par DVC
@@ -53,12 +22,7 @@ __pycache__/
 data/raw_data/*
 data/processed_data/*
 models/*
-
-# -----------------------------
-# Fichiers temporaires / logs
-# -----------------------------
-*.log
-*.tmp
+metrics/*
 
 # -----------------------------
 # Fichiers IDE / OS
@@ -66,15 +30,27 @@ models/*
 .vscode/
 .idea/
 .DS_Store
+Thumbs.db
 
 # -----------------------------
-# DVC files à ne pas ignorer
+# DVC cache (ne pas suivre avec Git)
 # -----------------------------
+.dvc/cache/
 
+# -----------------------------
+# Ne pas ignorer les fichiers de suivi DVC essentiels
+# -----------------------------
+!.dvc/config
+!.dvc/.gitignore
+!.dvc/tmp/
+!.dvc/*.dvc
 
-# .dvc, dvc.yaml, dvc.lock doivent rester suivis par Git
-# pour versionner la pipeline et les métadonnées des données
+# -----------------------------
+# Notebooks temporaires
+# -----------------------------
+*.ipynb_checkpoints
 
-env_examen/
-env_examen/
-/raw.csv
+# -----------------------------
+# Autres fichiers temporaires ou secrets
+# -----------------------------
+*.env
