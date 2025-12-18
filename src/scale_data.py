@@ -1,36 +1,52 @@
-from pathlib import Path
+#!/usr/bin/env python3
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-import joblib
+from pathlib import Path
 
-# Chemin vers les fichiers split
-processed_path = Path("../data/processed_data")
+# Chemins des fichiers
+X_train_path = Path("data/processed/X_train.csv")
+X_test_path = Path("data/processed/X_test.csv")
+y_train_path = Path("data/processed/y_train.csv")
+y_test_path = Path("data/processed/y_test.csv")
 
-# Charger les datasets
-X_train = pd.read_csv(processed_path / "X_train.csv")
-X_test = pd.read_csv(processed_path / "X_test.csv")
+# Charger les fichiers déjà splités
+X_train = pd.read_csv(X_train_path)
+X_test = pd.read_csv(X_test_path)
+y_train = pd.read_csv(y_train_path)
+y_test = pd.read_csv(y_test_path)
 
-# Sélection des colonnes numériques uniquement
-numeric_cols = X_train.select_dtypes(include=['float64', 'int64']).columns
-X_train_numeric = X_train[numeric_cols]
-X_test_numeric = X_test[numeric_cols]
+# --------------------------
+# 1️⃣ Gérer les colonnes non numériques
+# --------------------------
+if "date" in X_train.columns:
+    X_train["year"] = pd.to_datetime(X_train["date"]).dt.year
+    X_train["month"] = pd.to_datetime(X_train["date"]).dt.month
+    X_train["day"] = pd.to_datetime(X_train["date"]).dt.day
+    X_test["year"] = pd.to_datetime(X_test["date"]).dt.year
+    X_test["month"] = pd.to_datetime(X_test["date"]).dt.month
+    X_test["day"] = pd.to_datetime(X_test["date"]).dt.day
+    X_train = X_train.drop(columns=["date"])
+    X_test = X_test.drop(columns=["date"])
 
-# Normalisation
+# Supprimer d'autres colonnes textuelles si besoin
+text_cols = X_train.select_dtypes(include="object").columns
+X_train = X_train.drop(columns=text_cols)
+X_test = X_test.drop(columns=text_cols)
+
+# --------------------------
+# 2️⃣ Standardiser les colonnes numériques
+# --------------------------
+numeric_cols = X_train.select_dtypes(include="number").columns
 scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train_numeric)
-X_test_scaled = scaler.transform(X_test_numeric)
+X_train_scaled = pd.DataFrame(scaler.fit_transform(X_train[numeric_cols]), columns=numeric_cols)
+X_test_scaled = pd.DataFrame(scaler.transform(X_test[numeric_cols]), columns=numeric_cols)
 
-# Reconstruire les DataFrames avec les colonnes originales
-X_train_scaled_df = pd.DataFrame(X_train_scaled, columns=numeric_cols)
-X_test_scaled_df = pd.DataFrame(X_test_scaled, columns=numeric_cols)
+# --------------------------
+# 3️⃣ Sauvegarder les fichiers
+# --------------------------
+X_train_scaled.to_csv("data/processed/X_train_scaled.csv", index=False)
+X_test_scaled.to_csv("data/processed/X_test_scaled.csv", index=False)
+y_train.to_csv("data/processed/y_train.csv", index=False)
+y_test.to_csv("data/processed/y_test.csv", index=False)
 
-# Sauvegarder les datasets normalisés
-X_train_scaled_df.to_csv(processed_path / "X_train_scaled.csv", index=False)
-X_test_scaled_df.to_csv(processed_path / "X_test_scaled.csv", index=False)
-
-# Sauvegarder le scaler pour un usage futur
-Path("../models").mkdir(exist_ok=True)
-joblib.dump(scaler, "../models/scaler.pkl")
-
-print("Normalisation terminée. Colonnes numériques normalisées :")
-print(list(numeric_cols))
+print("Scaling terminé et fichiers sauvegardés dans data/processed/")

@@ -1,32 +1,27 @@
-from pathlib import Path
 import pandas as pd
-from sklearn.metrics import mean_squared_error, r2_score
 import joblib
-import json
+from sklearn.metrics import mean_squared_error, r2_score
 
-processed_path = Path("../data/processed_data")
+# Charger les données
+X_test = pd.read_csv("data/processed/X_test_scaled.csv")
+y_test = pd.read_csv("data/processed/y_test.csv").values.ravel()
 
-X_test = pd.read_csv(processed_path / "X_test_scaled.csv")
-y_test = pd.read_csv(processed_path / "y_test.csv")
+# Garder uniquement les colonnes numériques
+X_test = X_test.select_dtypes(include=["float64", "int64"])
 
 # Charger le modèle
-model = joblib.load("../models/final_model.pkl")
+model = joblib.load("models/model.pkl")
 
-# Prédictions
+# Prédire
 y_pred = model.predict(X_test)
 
-# Sauvegarder les prédictions
-predictions_path = Path("../data")
-predictions_path.mkdir(exist_ok=True)
-pd.DataFrame({"y_true": y_test.values.ravel(), "y_pred": y_pred}).to_csv(predictions_path / "predictions.csv", index=False)
+# Calculer métriques
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
 
-# Calculer et sauvegarder les métriques
-metrics = {
-    "mse": mean_squared_error(y_test, y_pred),
-    "r2": r2_score(y_test, y_pred)
-}
+# Sauvegarder les métriques
+import json
+with open("metrics/metrics.json", "w") as f:
+    json.dump({"mse": mse, "r2": r2}, f)
 
-metrics_path = Path("../metrics")
-metrics_path.mkdir(exist_ok=True)
-with open(metrics_path / "scores.json", "w") as f:
-    json.dump(metrics, f, indent=4)
+print(f"Évaluation terminée. MSE: {mse:.4f}, R2: {r2:.4f}")

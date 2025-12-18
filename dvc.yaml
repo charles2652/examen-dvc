@@ -1,0 +1,51 @@
+stages:
+  split_data:
+    cmd: python src/split_data.py
+    deps:
+    - raw.csv
+    - src/split_data.py
+    outs:
+    - data/processed/X_train.csv
+    - data/processed/X_test.csv
+    - data/processed/y_train.csv
+    - data/processed/y_test.csv
+
+  scale_data:
+    cmd: python src/scale_data.py
+    deps:
+    - data/processed/X_train.csv
+    - data/processed/X_test.csv
+    - src/scale_data.py
+    outs:
+    - data/processed/X_train_scaled.csv
+    - data/processed/X_test_scaled.csv
+
+  grid_search:
+    cmd: python src/grid_search.py
+    deps:
+    - data/processed/X_train_scaled.csv
+    - data/processed/y_train.csv
+    - src/grid_search.py
+    outs:
+    - models/best_params.json
+
+  train_model:
+    cmd: python src/train_model.py
+    deps:
+    - data/processed/X_train_scaled.csv
+    - data/processed/y_train.csv
+    - models/best_params.json
+    - src/train_model.py
+    outs:
+    - models/model.pkl
+
+  evaluate_model:
+    cmd: python src/evaluate_model.py
+    deps:
+    - data/processed/X_test_scaled.csv
+    - data/processed/y_test.csv
+    - models/model.pkl
+    - src/evaluate_model.py
+    metrics:
+    - metrics/metrics.json:
+        cache: false
