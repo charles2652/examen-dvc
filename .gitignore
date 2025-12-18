@@ -36,4 +36,16 @@ models/*
 
 # .dvc, dvc.yaml, dvc.lock doivent rester suivis par Git
 # pour versionner la pipeline et les métadonnées des données
+=======
+# Environnements virtuels
+env_examen/
+.venv/
+venv/
+
+# Données brutes
+data/raw_data/*.csv
+
+# DVC cache
+.dvc/cache/
+
 
