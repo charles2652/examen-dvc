@@ -1,4 +1,7 @@
 [core]
     remote = dagshub-dvc
 ['remote "dagshub-dvc"']
+=======
+    remote = dagshub
+['remote "dagshub"']
     url = https://dagshub.com/charles2652/examen-dvc.dvc
