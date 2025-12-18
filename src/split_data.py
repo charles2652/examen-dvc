@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 # Chemin relatif vers le fichier raw
-data_path = Path("../data/raw_data/raw.csv")
+data_path = Path("../raw.csv")
 df = pd.read_csv(data_path)
 
 # Séparer features et cible
