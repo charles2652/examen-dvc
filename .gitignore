@@ -1,2 +1,39 @@
-/venv
-/clean_data.csv
+# -----------------------------
+# Environnements Python
+# -----------------------------
+env_examen/
+venv/
+__pycache__/
+*.pyc
+
+# -----------------------------
+# Données volumineuses ou générées par DVC
+# -----------------------------
+data/raw_data/*
+data/processed_data/*
+models/*
+
+# -----------------------------
+# Fichiers temporaires / logs
+# -----------------------------
+*.log
+*.tmp
+
+# -----------------------------
+# Fichiers IDE / OS
+# -----------------------------
+.vscode/
+.idea/
+.DS_Store
+
+# -----------------------------
+# DVC files à ne pas ignorer
+# -----------------------------
+
+!data/raw_data/*.dvc
+!data/processed_data/*.dvc
+!models/*.dvc
+
+# .dvc, dvc.yaml, dvc.lock doivent rester suivis par Git
+# pour versionner la pipeline et les métadonnées des données
+
