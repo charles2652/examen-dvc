@@ -61,9 +61,9 @@ __pycache__/
 # -----------------------------
 # Données volumineuses ou générées par DVC
 # -----------------------------
-data/raw_data/
-data/processed_data/*.csv
-models/*.pkl
+data/raw_data/*
+data/processed_data/*
+models/*
 
 # -----------------------------
 # Fichiers temporaires / logs
@@ -81,6 +81,11 @@ models/*.pkl
 # -----------------------------
 # DVC files à ne pas ignorer
 # -----------------------------
+
+!data/raw_data/*.dvc
+!data/processed_data/*.dvc
+!models/*.dvc
+
 # .dvc, dvc.yaml, dvc.lock doivent rester suivis par Git
 # pour versionner la pipeline et les métadonnées des données
 
