@@ -54,3 +54,4 @@ Thumbs.db
 # Autres fichiers temporaires ou secrets
 # -----------------------------
 *.env
+/raw.csv
