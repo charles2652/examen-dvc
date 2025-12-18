@@ -38,7 +38,6 @@ data/raw_data/*.csv
 # DVC cache
 #.dvc/cache/
 =======
-/raw.csv
 =======
 # -----------------------------
 # Environnements Python
@@ -76,4 +75,5 @@ models/*
 # .dvc, dvc.yaml, dvc.lock doivent rester suivis par Git
 # pour versionner la pipeline et les métadonnées des données
 
+env_examen/
 env_examen/
