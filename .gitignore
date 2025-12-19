@@ -23,6 +23,8 @@ data/raw_data/*
 data/processed_data/*
 models/*
 metrics/*
+data/processed/
+data/predictions.csv
 
 # -----------------------------
 # Fichiers IDE / OS
