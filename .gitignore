@@ -1,6 +1,6 @@
-# -----------------------------
+# =============================
 # Environnements Python
-# -----------------------------
+# =============================
 env_examen/
 venv/
 .venv/
@@ -9,51 +9,51 @@ __pycache__/
 *.pyo
 *.pyd
 
-# -----------------------------
-# Fichiers temporaires Python
-# -----------------------------
-*.log
+# =============================
+# Fichiers temporaires
+# =============================
 *.tmp
 *.swp
 
-# -----------------------------
-# Données volumineuses ou générées par DVC
-# -----------------------------
-data/raw_data/*
-data/processed_data/*
-models/*
-metrics/*
-data/processed/
-data/predictions.csv
+# =============================
+# Logs (gérés localement)
+# =============================
+logs/*.log
 
-# -----------------------------
-# Fichiers IDE / OS
-# -----------------------------
+# =============================
+# IDE / OS
+# =============================
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
 
-# -----------------------------
-# DVC cache (ne pas suivre avec Git)
-# -----------------------------
+# =============================
+# DVC cache (jamais versionné)
+# =============================
 .dvc/cache/
 
-# -----------------------------
-# Ne pas ignorer les fichiers de suivi DVC essentiels
-# -----------------------------
+# =============================
+# Données brutes suivies par DVC
+# =============================
+raw.csv
+
+# =============================
+# Ne PAS ignorer (obligatoires examen)
+# =============================
+!data/processed/
+!models/
+!metrics/
+
+# =============================
+# Fichiers DVC essentiels
+# =============================
 !.dvc/config
 !.dvc/.gitignore
 !.dvc/tmp/
 !.dvc/*.dvc
 
-# -----------------------------
+# =============================
 # Notebooks temporaires
-# -----------------------------
-*.ipynb_checkpoints
-
-# -----------------------------
-# Autres fichiers temporaires ou secrets
-# -----------------------------
-*.env
-/raw.csv
+# =============================
+.ipynb_checkpoints/
